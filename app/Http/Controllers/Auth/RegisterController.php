@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use App\Notifications\VerifyEmail;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+
 
 class RegisterController extends Controller
 {
@@ -48,6 +51,9 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
+        //later try and implement the codes to handle them sending in is an admin or not
+        //the plan is that the page to create users is to have hiddenf field of the name admin wiv 
+        //value false 
         return Validator::make($data, [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
@@ -63,10 +69,19 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        $user =  User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'verify_token' => str_random(8)
         ]);
+
+        //$user->notify(new VerifyEmail($user));
+        $user->sendVerificationEmail();
+
+        session()->flash('suc_msg', 
+            'Account creation was succesful, please check yur mail in order to activate your account.');
+
+        return $user;
     }
 }
