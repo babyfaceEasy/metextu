@@ -46,6 +46,14 @@ class User extends Authenticatable
         return $this->admin;
     }
 
+    //relationships
+
+    public function groups()
+    {
+        return $this->hasMany('App\Group');
+    }//end of groups()
+    //end of relationships
+
     /**
      * This is gonna send the user a verification email
      * 

@@ -25,3 +25,5 @@ Route::post('/client/profile', 'HomeController@updateProfile')->name('update.pro
 
 Route::view('/client/change_password', 'auth.passwords.change')->name('show.change.password');
 Route::post('/client/change_password', 'HomeController@changePassword')->name('change.password');
+Route::resource('/client/groups', 'GroupController');
+Route::resource('/client/groups.contacts', 'ContactController');
