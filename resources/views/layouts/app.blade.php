@@ -44,8 +44,8 @@
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{route('groups.create')}}">Add Group</a>
                                     <a class="dropdown-item" href="{{ route('groups.index') }}">View Groups</a>
-                                    <a class="dropdown-item" href="#">Add Contact</a>
-                                    <a class="dropdown-item" href="#">View Contacts</a>
+                                    <!--<a class="dropdown-item" href="#">Add Contact</a>
+                                    <a class="dropdown-item" href="#">View Contacts</a>-->
                                 </div>
                             </li>
 

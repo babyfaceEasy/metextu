@@ -37,7 +37,7 @@
                                 <td>
                                     <a href="{{ route('groups.contacts.edit', [ 'contact' => $contact, 'group' => $group ]) }}">Edit</a> |
                                     <a href="#" onclick="DelContact({{$contact->id}});">Delete</a>
-                                    <form method="POST" action="{{ route('groups.contacts.destroy', ['contact' => $contact, 'group' => $group ])}}" id="delete-form{{$contact->id}}" style="display: none;">
+                                    <form method="POST" action="{{ route('groups.contacts.destroy', ['group' => $group, 'contact' => $contact ])}}" id="delete-form{{$contact->id}}" style="display: none;">
                                         @csrf
                                         @method('delete')
                                     </form>
@@ -57,11 +57,11 @@
 </div>
 
 <script>
-    function DelGroup(group_id) {
+    function DelContact(contact_id) {
         event.preventDefault();
         //alert(group_id);
         //create the form id and call it submit action
-        var elt_id = 'delete-form'+group_id;
+        var elt_id = 'delete-form'+contact_id;
         document.getElementById(elt_id).submit();
     }
 </script>

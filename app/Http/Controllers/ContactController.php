@@ -134,8 +134,25 @@ class ContactController extends Controller
      * @param  \App\Contact  $contact
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Contact $contact)
+    public function destroy(Group $group, Contact $contact)
     {
-        //
+        //search to see if the contact exist
+        $contact = Contact::where([
+            'id' => $contact->id,
+            'group_id' => $group->id
+        ])->firstOrFail();
+
+        //delete the contact now
+        try{
+            $contact->delete();
+        }catch (Exception $e){
+            //log error
+            Log::error('Error in deleting contact with id:', $contact->id);
+            Log::error('Due to the fact that ', $e->getMessage());
+
+            $request->session()->flash('err_msg', "An error occurreed, please try again later.");
+        }
+        //was successful
+        return redirect()->back()->with('suc_msg', "Delete Operation for contact was successful!");
     }
 }
