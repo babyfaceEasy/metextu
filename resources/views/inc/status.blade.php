@@ -4,7 +4,7 @@
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
-        <strong>Success!</strong> {{ Session('suc_msg') }}.
+        <strong>Success!</strong> {{ Session('suc_msg') }}
     </div>
 @endif
 
@@ -13,6 +13,6 @@
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>
-        <strong>Failure!</strong> {{ Session('err_msg') }}.
+        <strong>Failure!</strong> {{ Session('err_msg') }}
     </div>
 @endif

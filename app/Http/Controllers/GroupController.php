@@ -6,6 +6,7 @@ use App\Group;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Auth\Access\AuthorizationException;
 
 class GroupController extends Controller
 {
@@ -17,6 +18,7 @@ class GroupController extends Controller
     public function index()
     {
         $groups = Group::where('user_id', Auth::user()->id)->get();
+        //$groups = Group::all();  
         return view('clients.groups.index')->with('groups', $groups);
     }
 
@@ -80,6 +82,17 @@ class GroupController extends Controller
      */
     public function edit(Group $group)
     {
+        //check if the user is authorized
+        try{
+            $this->authorize('edit', $group);
+        }catch (AuthorizationException $e){
+            //log error
+            Log::error('User with id: '.Auth::user()->id.', tried to view a group not belonging to him/her.');
+            //Log::error('Due to the fact that ', $e->toArray());
+
+            return redirect()->back()->with('err_msg', 'You are not authorized to performe this action.');
+        }
+        //all is cool
         return view('clients.groups.edit')->with('group', $group);
     }
 
@@ -92,12 +105,24 @@ class GroupController extends Controller
      */
     public function update(Request $request, Group $group)
     {
+        
         //validate data
         $data = $this->validate($request, [
             'gname' => 'required|min:3',
         ]);
-        //valid data and perform update
 
+        //check if the user is authorized
+        try{
+            $this->authorize('update', $group);
+        }catch (AuthorizationException $e){
+            //log error
+            Log::error('User with id: '.Auth::user()->id.', tried to update a group not belonging to him/her.');
+            //Log::error('Due to the fact that ', $e->toArray());
+
+            return redirect()->back()->with('err_msg', 'You are not authorized to performt his action.');
+        }
+
+        //perform update
         try{
 
             $group->fill($data);
@@ -124,6 +149,18 @@ class GroupController extends Controller
      */
     public function destroy(Group $group)
     {
+        //$this->authorize('delete', $group);
+        //check if the user is authorized
+        try{
+            $this->authorize('delete', $group);
+        }catch (AuthorizationException $e){
+            //log error
+            Log::error('User with id: '.Auth::user()->id.', tried to delete a group not belonging to him/her.');
+            //Log::error('Due to the fact that ', $e->toArray());
+
+            return redirect()->back()->with('err_msg', 'You are not authorized to performt his action.');
+        }
+        
         //dd('we are in the destroy function');
         try{
 

@@ -6,6 +6,9 @@ use App\Group;
 use App\Contact;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Auth\Access\AuthorizationException;
+
 
 class ContactController extends Controller
 {
@@ -92,6 +95,15 @@ class ContactController extends Controller
      */
     public function edit(Group $group, Contact $contact )
     {
+        //check to see if the user is authorized
+        try{
+            $this->authorize('edit', $contact);
+        }catch( AuthorizationException $e){
+            //log error
+            Log::error('A user with id: '. Auth::user()->id. ', tried to edit the contact not belonging to him / her.');
+
+            return redirect()->route('groups.index')->with('err_msg', "You are not allowed to perform this action.");
+        }
         return view('clients.contacts.edit', compact('contact', 'group'));
     }
 
@@ -104,6 +116,16 @@ class ContactController extends Controller
      */
     public function update(Request $request, Group $group, Contact $contact)
     {
+        //check to see if the user is authorized
+        try{
+            $this->authorize('update', $contact);
+        }catch( AuthorizationException $e){
+            //log error
+            Log::error('A user with id: '. Auth::user()->id. ', tried to update the contact not belonging to him / her.');
+
+            return redirect()->route('groups.index')->with('err_msg', "You are not allowed to perform this action.");
+        }
+        
         //dd($request);
         $data = $this->validate($request, [
             'cname' => 'required|min:3',
@@ -136,11 +158,23 @@ class ContactController extends Controller
      */
     public function destroy(Group $group, Contact $contact)
     {
+        //check to see if the user is authorized
+        try{
+            $this->authorize('edit', $contact);
+        }catch( AuthorizationException $e){
+            //log error
+            Log::error('A user with id: '. Auth::user()->id. ', tried to delete a contact not belonging to him / her.');
+
+            return redirect()->route('groups.index')->with('err_msg', "You are not allowed to perform this action.");
+        }
+
+
         //search to see if the contact exist
         $contact = Contact::where([
             'id' => $contact->id,
             'group_id' => $group->id
         ])->firstOrFail();
+
 
         //delete the contact now
         try{
