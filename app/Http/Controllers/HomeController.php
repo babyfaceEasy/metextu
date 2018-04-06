@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Sms;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -27,7 +28,9 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $total_sms = Auth::user()->totalSMSSent();
+        return view('home', compact('total_sms'));
+        //return view('home');
     }
 
     public function showProfile()

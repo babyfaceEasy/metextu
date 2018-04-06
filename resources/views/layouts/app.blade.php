@@ -44,8 +44,22 @@
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{route('groups.create')}}">Add Group</a>
                                     <a class="dropdown-item" href="{{ route('groups.index') }}">View Groups</a>
-                                    <!--<a class="dropdown-item" href="#">Add Contact</a>
-                                    <a class="dropdown-item" href="#">View Contacts</a>-->
+                                    <a class="dropdown-item" href="{{ route ('all.contacts') }}">All Contacts</a>
+                                    <!--<a class="dropdown-item" href="#">View Contacts</a>-->
+                                </div>
+                            </li>
+
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    SMS <span class="caret"></span>
+                                </a>
+
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{route('create.sms')}}">Send SMS</a>
+                                    <a class="dropdown-item" href="{{ route('groups.index') }}">View Groups</a>
+                                    <a class="dropdown-item" href="{{ route ('all.contacts') }}">All Contacts</a>
+                                    <a class="dropdown-item" href="{{route('test.sms')}}">Send SMS</a>
+                                    <!--<a class="dropdown-item" href="#">View Contacts</a>-->
                                 </div>
                             </li>
 

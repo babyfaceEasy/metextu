@@ -26,4 +26,12 @@ Route::post('/client/profile', 'HomeController@updateProfile')->name('update.pro
 Route::view('/client/change_password', 'auth.passwords.change')->name('show.change.password');
 Route::post('/client/change_password', 'HomeController@changePassword')->name('change.password');
 Route::resource('/client/groups', 'GroupController');
+Route::get('/all-contacts', 'ContactController@allContacts')->name('all.contacts');
 Route::resource('/client/groups.contacts', 'ContactController');
+
+//for sms section
+Route::get('/test-sms', 'ContactController@testSMSSender')->name('test.sms');
+Route::get('clients/create-sms', 'SMSController@create')->name('create.sms');
+Route::post('/clients/send-sms', 'SMSController@sendSMS')->name('send.sms');
+//handle the sms updates
+Route::post('/sms-status-updates', 'SMSController@delivery_report')->name('sms.status');

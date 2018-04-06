@@ -160,6 +160,9 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        //for plivio messaging
+        Midnite81\Plivo\MessagingServiceProvider::class,
+
     ],
 
     /*
@@ -208,6 +211,8 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+        //for plivo messaging
+        'Messaging' => Midnite81\Plivo\Facades\Messaging::class,
 
     ],
 

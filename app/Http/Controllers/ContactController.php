@@ -3,15 +3,36 @@
 namespace App\Http\Controllers;
 
 use App\Group;
+//use Messaging;
 use App\Contact;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use Midnite81\Plivo\Contracts\Services\Messaging;
 use Illuminate\Auth\Access\AuthorizationException;
+
 
 
 class ContactController extends Controller
 {
+    /**
+     * This returns a list of all contacts 
+     * @return Collection 
+     */
+    public function allContacts()
+    {
+        //select all data where the id is equal to $user
+        $user_id = Auth::user()->id;
+        $contacts = Contact::all();
+        $user_cnts = $contacts->filter(function ($value, $key) use($user_id){
+            return $value->group->user_id == Auth::user()->id;
+            //return $value->group->user_id == $user_id;
+        });
+
+        return view('clients.contacts.all_contacts', compact('user_cnts'));
+
+        //dd($curr_user_cnts);
+    }
     /**
      * Creates a new controller instance
      * 
@@ -189,4 +210,48 @@ class ContactController extends Controller
         //was successful
         return redirect()->back()->with('suc_msg', "Delete Operation for contact was successful!");
     }
+
+    public function testSMSSender(Request $request, Messaging $messaging)
+    {
+        $msg = $messaging->from('MeTextU')->msg('Hello world from MetxtUC!')->to(['+2349097694139', '+2348060423371'])->sendMessage();
+        //$msg = $messaging->getMessage('bda0cfac-37c7-11e8-bbfd-02af11be3b72');
+        dd($msg);
+        return 'gone';
+
+        /*
+         * send sms return / response
+         array:2 [▼
+            "status" => 202
+            "response" => array:3 [▼
+                "api_id" => "e9ecdf64-37c8-11e8-9746-060740e7e786"
+                "message" => "message(s) queued"
+                "message_uuid" => array:1 [▼
+                0 => "e9ed3ea0-37c8-11e8-9746-060740e7e786"
+                ]
+            ]
+            ]
+         */
+
+        /*
+        get message return statement
+        array:2 [▼
+        "status" => 200
+        "response" => array:13 [▼
+            "api_id" => "da1fcda4-37c7-11e8-bbfd-02af11be3b72"
+            "error_code" => "000"
+            "from_number" => "16806666853"
+            "message_direction" => "outbound"
+            "message_state" => "delivered"
+            "message_time" => "2018-04-04 01:19:25-04:00"
+            "message_type" => "sms"
+            "message_uuid" => "bda0cfac-37c7-11e8-bbfd-02af11be3b72"
+            "resource_uri" => "/v1/Account/MAMGQZMZUYZDU5NDNHM2/Message/bda0cfac-37c7-11e8-bbfd-02af11be3b72/"
+            "to_number" => "2349097694139"
+            "total_amount" => "0.01300"
+            "total_rate" => "0.01300"
+            "units" => 1
+        ]
+        ]
+        */
+    }//end of test
 }

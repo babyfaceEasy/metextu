@@ -52,7 +52,14 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Group');
     }//end of groups()
+
+    public function sms()
+    {
+        return $this->hasMany('App\Sms');
+    }
     //end of relationships
+
+    //helper methods
 
     /**
      * This is gonna send the user a verification email
@@ -62,5 +69,16 @@ class User extends Authenticatable
 
     public function sendVerificationEmail(){
         $this->notify(new VerifyEmail($this));
+    }
+
+    public function totalSMSSent()
+    {
+        $total_messages = 0;
+        $smses = $this->sms;
+        foreach($smses as $sms){
+            $total_messages += $sms->messages->count();
+        }
+        return $total_messages;
+        //return $this->sms->messages->count();
     }
 }
