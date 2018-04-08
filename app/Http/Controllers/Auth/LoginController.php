@@ -46,20 +46,27 @@ class LoginController extends Controller
      */
     protected function credentials(Request $request)
     {
-        //return $request->only($this->username(), 'password');
-        return array_merge($request->only($this->username(), 'password'), ['confirmed' => 1]);
+        return $request->only($this->username(), 'password');
+        //return array_merge($request->only($this->username(), 'password'), ['confirmed' => 1]);
     }
 
-    /**
-     * Handle an authentication attempt.
-     *
-     * @return Response
-     */
-    /*public function authenticate()
+    //this is to check if the user is verified/confirmed.
+    public function authenticated(Request $request, $user)
     {
-        if (Auth::attempt(['email' => $email, 'password' => $password, 'confirmed' => 1])) {
-            // Authentication passed...
-            return redirect()->intended('dashboard');
+        if (!$user->confirmed) {
+            auth()->logout();
+            return back()->with('err_msg', 'You need to confirm your account. We have sent you an activation code, please check your email.');
         }
-    }*/
+        return redirect()->intended($this->redirectPath());
+    }
+
+    //this is to control where it redirects to after logout
+    public function logout(Request $request)
+    {
+        $this->guard()->logout();
+
+        $request->session()->invalidate();
+
+        return redirect('/login');
+    }
 }

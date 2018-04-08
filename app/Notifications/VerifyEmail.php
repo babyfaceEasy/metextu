@@ -44,7 +44,9 @@ class VerifyEmail extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->line('Please verify your account email to continue.')
+                    ->subject('Welcome to MeTextU! Confirm your Email' )
+                    ->line('Please verify your email account to continue.')
+                    ->line('By clicking on the following link, you are confirming your email address.')
                     ->action('Verify Account', route('verify', $this->user->verify_token))
                     ->line('Thank you for using our application!');
     }

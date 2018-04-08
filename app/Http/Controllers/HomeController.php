@@ -47,6 +47,8 @@ class HomeController extends Controller
     {
         $data = $this->validate($request, [
             'name' => 'required|string|max:255',
+            'username' => 'required|alpha_dash|max:40|unique:users',
+            'phone_number' => 'required|string|max:20',
         ]);
 
         //dd($data);
@@ -105,7 +107,7 @@ class HomeController extends Controller
         }
 
         //it was successful
-        return redirect()->back()->with('suc_msg', "Password changed sucessfully !");
+        return redirect()->route('show.profile')->with('suc_msg', "Password changed sucessfully !");
 
     }//end of changePassword
 }

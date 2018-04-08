@@ -35,3 +35,6 @@ Route::get('clients/create-sms', 'SMSController@create')->name('create.sms');
 Route::post('/clients/send-sms', 'SMSController@sendSMS')->name('send.sms');
 //handle the sms updates
 Route::post('/sms-status-updates', 'SMSController@delivery_report')->name('sms.status');
+
+//test activities
+Route::get('/test/mail', 'TestController@sendMail')->name('test.mail');

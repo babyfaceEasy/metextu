@@ -1,24 +1,4 @@
-@extends('layouts.app')
-
+@extends('layouts.logged_in')
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Dashboard</div>
-
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    You are logged in! <br>
-                    Total sms is {{ $total_sms }}.
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+    <h1>Home things</h1>
 @endsection

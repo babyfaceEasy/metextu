@@ -1,69 +1,94 @@
-@extends('layouts.app')
-
+@extends('layouts.logged_in')
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Send New Message</div>
+<!-- ============================================================== -->
+<!-- Start right Content here -->
+<!-- ============================================================== -->
+<div class="content-page">
+        <!-- Start content -->
+        <div class="content">
+            <div class="container">
 
-                <div class="card-body">
-                    @include('inc.status')
-                    <form method="POST" action="{{ route('send.sms') }}">
-                        {{ csrf_field() }}
-                        <div class="form-group row">
-                                <label for="sender_name" class="col-sm-4 col-form-label text-md-right">Sender Name</label>
-    
-                                <div class="col-md-6">
-                                    <input id="sender_name" type="text" class="form-control{{ $errors->has('sender_name') ? ' is-invalid' : '' }}" name="sender_name" value="{{ old('sender_name') }}" required autofocus>
-    
-                                    @if ($errors->has('sender_name'))
-                                        <span class="invalid-feedback">
-                                            <strong>{{ $errors->first('sender_name') }}</strong>
-                                        </span>
-                                    @endif
-                                </div>
-                            </div>
+                <!-- Page-Title -->
+                @include('inc.quick_links')
 
-                            <div class="form-group row">
-                                    <label for="dst_nos" class="col-sm-4 col-form-label text-md-right">Phone numbers</label>
-        
-                                    <div class="col-md-6">
-                                        <input id="dst_nos" type="text" class="form-control{{ $errors->has('dst_nos') ? ' is-invalid' : '' }}" name="dst_nos" value="{{ old('dst_nos') }}" required>
-                                        <!--<input type="hidden" name="group_id" value="{{-- $group->id --}}">-->
-                                        @if ($errors->has('dst_nos'))
-                                            <span class="invalid-feedback">
-                                                <strong>{{ $errors->first('dst_nos') }}</strong>
-                                            </span>
-                                        @endif
-                                    </div>
-                                </div>
 
-                                <div class="form-group row">
-                                    <label for="message" class="col-sm-4 col-form-label text-md-right">Message</label>
-        
-                                    <div class="col-md-6">
-                                        <textarea name="message" id="message" cols="30" rows="10" required>{{ old('dst_nos') }}</textarea>
-                                        <!--<input type="hidden" name="group_id" value="{{-- $group->id --}}">-->
-                                        @if ($errors->has('message'))
-                                            <span class="invalid-feedback">
-                                                <strong>{{ $errors->first('message') }}</strong>
-                                            </span>
-                                        @endif
-                                    </div>
-                                </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Send SMS
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="card-box">
+                            <form method="POST" action="{{ route('send.sms') }}">
+                                    {{ csrf_field() }}
+                <div class="form-group">
+                    <label class="col-md-2 control-label">Sender</label>
+                    <div class="col-md-6" style="margin-bottom: 20px;">
+                        <input type="text" class="form-control" value="{{Auth::user()->username}}">
+                    </div>
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
+                <div class="form-group">
+                    <div class="radio radio-primary col-md-2">
+                        <input id="radio1" type="radio" name="category">
+                        <label for="radio1">
+                        Use my Username
+                        </label>
+
+                    </div>
+                    <div class="radio radio-primary col-md-2 fred">
+                        <input id="radio1" type="radio" name="category">
+                        <label for="radio1">
+                        Use my Phone Number
+                        </label>
+                    </div>
+                </div>
+                                        <div class="clearfix"></div>
+                <div class="form-group">
+                    <label class="col-md-2 control-label" for="example-email">Phone</label>
+                        <div class="col-md-4">
+                        <input type="text" id="phone" name="phone" class="form-control" placeholder="+2348125689235, +2347058654128">
+                        </div>
+                </div>
+                <div class="form-group ">
+                                            <label class="col-sm-2 control-label">Or Select Address Book</label><div class="col-sm-4 fred2" >
+
+                                                <select class="form-control">
+
+                                                    <option>1</option>
+                                                    <option>2</option>
+                                                    <option>3</option>
+                                                    <option>4</option>
+                                                    <option>5</option>
+                                                </select>
+
+                                            </div>
+                                        </div>
+
+                        <div class="clearfix"></div>
+
+
+                <label >Message</label>
+                <textarea id="elm1" name="area" class="col-md-10 col-md-offset-2 form-control"></textarea>
+<div class="clearfix"></div>
+
+                <div class="row">
+                <div class="form-group fred">
+
+
+                        <button class="btn btn-purple waves-effect waves-light pull-right"> <span>Send SMS</span> <i class="fa fa-send m-l-10"></i> </button>
+
+                </div>
+                </div>
+
+
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- End row -->
+
+
+
+
+            </div> <!-- container -->
+
+        </div> <!-- content -->
 @endsection

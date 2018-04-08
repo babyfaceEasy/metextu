@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use Illuminate\Http\Request;
+use Illuminate\Auth\Events\Registered;
 use App\Notifications\VerifyEmail;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
@@ -31,7 +33,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/login';
 
     /**
      * Create a new controller instance.
@@ -57,6 +59,8 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
+            'username' => 'required|alpha_dash|max:40|unique:users',
+            'phone_number' => 'required|string|max:20',
             'password' => 'required|string|min:6|confirmed',
         ]);
     }
@@ -72,6 +76,8 @@ class RegisterController extends Controller
         $user =  User::create([
             'name' => $data['name'],
             'email' => $data['email'],
+            'username' => $data['username'],
+            'phone_number' => $data['phone_number'],
             'password' => Hash::make($data['password']),
             'verify_token' => str_random(8)
         ]);
@@ -83,5 +89,12 @@ class RegisterController extends Controller
             'Account creation was succesful, please check yur mail in order to activate your account.');
 
         return $user;
+    }
+
+    //this redirects the user after they have registered
+    public function registered(Request $request, $user)
+    {
+        $this->guard()->logout();
+        return redirect('/login')->with('suc_msg', 'We sent you an activation code. Check your email and click on the link to verify.');
     }
 }
