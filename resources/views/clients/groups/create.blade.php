@@ -1,41 +1,54 @@
-@extends('layouts.app')
-
+@extends('layouts.logged_in')
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Add new Group</div>
-
-                <div class="card-body">
-                    @include('inc.status')
-                    <form method="POST" action="{{ route('groups.store') }}">
-                        @csrf
-                        <div class="form-group row">
-                                <label for="gname" class="col-sm-4 col-form-label text-md-right">Group Name</label>
+<!-- ============================================================== -->
+            <!-- Start right Content here -->
+            <!-- ============================================================== -->
+            <div class="content-page">
+                    <!-- Start content -->
+                    <div class="content">
+                        <div class="container">
+                            @include('inc.status')
+                            <!-- Page-Title -->
+                            @include('inc.quick_links', ['page_title' => 'New group'])
     
-                                <div class="col-md-6">
-                                    <input id="gname" type="text" class="form-control{{ $errors->has('gname') ? ' is-invalid' : '' }}" name="gname" value="{{ old('gname') }}" required autofocus>
     
-                                    @if ($errors->has('gname'))
-                                        <span class="invalid-feedback">
-                                            <strong>{{ $errors->first('gname') }}</strong>
-                                        </span>
-                                    @endif
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="card-box">
+                                        <form method="POST" action="{{ route('groups.store') }}">
+                          
+                                        {{ csrf_field() }}
+    
+                            <label >Group Name:</label>
+                            <!--<textarea id="elm1" name="area" class="col-md-10 col-md-offset-2 form-control"></textarea>-->
+                            <input id="gname" type="text" class="form-control{{ $errors->has('gname') ? ' is-invalid' : '' }}" name="gname" value="{{ old('gname') }}" required autofocus>
+                            @if ($errors->has('gname'))
+                                <span class="invalid-feedback">
+                                    <strong>{{ $errors->first('gname') }}</strong>
+                                </span>
+                            @endif
+                            <div class="clearfix"></div>
+    
+                          <div class="row">
+                            <div class="form-group fred">
+    
+    
+                                <button type="submit" class="btn btn-purple waves-effect waves-light pull-right"> Create Group</button>
+    
+                            </div>
+                          </div>
+    
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
-
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    Create Group
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+    
+                            <!-- End row -->
+    
+    
+    
+    
+                        </div> <!-- container -->
+    
+                    </div> <!-- content -->
 @endsection

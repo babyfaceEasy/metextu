@@ -9,7 +9,7 @@
                 <div class="container">
 
                     <!-- Page-Title -->
-                    @include('inc.quick_links')
+                    @include('inc.quick_links', ['page_title' => 'Account Settings'])
 
                     <div class="row">
                         <div class="col-sm-12">

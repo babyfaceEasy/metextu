@@ -162,6 +162,7 @@ return [
 
         //for plivio messaging
         Midnite81\Plivo\MessagingServiceProvider::class,
+        Yajra\DataTables\DataTablesServiceProvider::class,
 
     ],
 
@@ -213,6 +214,7 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
         //for plivo messaging
         'Messaging' => Midnite81\Plivo\Facades\Messaging::class,
+        'DataTables' => Yajra\DataTables\Facades\DataTables::class,
 
     ],
 

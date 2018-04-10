@@ -5,26 +5,26 @@
                   <ul class="dropdown-menu drop-menu-right" role="menu">
                     
                 <li>
-                  <a href="index.php"> Dashboard  </a>                              
+                    <a href="{{ route('home') }}"> Dashboard  </a>                              
                 </li>
 
         <li >
-            <a href="send_sms.php">Send Sms</a>
+            <a href="{{ route('create.sms') }}">Send Sms</a>
             
         </li>
 
         <li>
-            <a href="address_book.php" >Address Book  </a>
+            <a href="{{ route('groups.index') }}" >Address Book  </a>
             
         </li>
 
         <li>
-            <a href="buy_credit.php">Buy Credits </a>
+            <a href="{{ route('credit.page') }}">Buy Credits </a>
             
         </li>
 
         <li>
-            <a href="transfer_credit.php" >Transfer Credit </a>
+            <a href="{{ route('transfer.page') }}" >Transfer Credit </a>
             
         </li>
 
@@ -35,7 +35,7 @@
         </li>
 
         <li>
-            <a href="settings.php">Account Settings</a>
+            <a href="{{ route('show.profile') }}">Account Settings</a>
             
         </li>
                     <li class="divider"></li>
@@ -47,7 +47,7 @@
                 </ul>
             </div>
 
-            <h4 class="page-title">Send SMS </h4>
-            <p class="text-muted page-title-alt"><small>Available Credit Unit <strong>40</strong></small></p>
+            <h4 class="page-title">{{$page_title}} </h4>
+            <p class="text-muted page-title-alt"><small>Available Credit Unit <strong>{{ (Auth::user()->credit->units) ? Auth::user()->credit->units : 0.0}}</strong></small></p>
         </div>
     </div>

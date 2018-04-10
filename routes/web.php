@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('auth.login');
 });
 
 Auth::routes();
@@ -25,7 +25,9 @@ Route::post('/client/profile', 'HomeController@updateProfile')->name('update.pro
 
 Route::view('/client/change_password', 'auth.passwords.change')->name('show.change.password');
 Route::post('/client/change_password', 'HomeController@changePassword')->name('change.password');
+Route::get('/datatable/groups/data', 'GroupController@getGroups')->name('dataTable.groups');
 Route::resource('/client/groups', 'GroupController');
+Route::get('/datatable/{group}/contacts/data', 'ContactController@getContacts')->name('dataTable.contacts');
 Route::get('/all-contacts', 'ContactController@allContacts')->name('all.contacts');
 Route::resource('/client/groups.contacts', 'ContactController');
 
@@ -38,3 +40,9 @@ Route::post('/sms-status-updates', 'SMSController@delivery_report')->name('sms.s
 
 //test activities
 Route::get('/test/mail', 'TestController@sendMail')->name('test.mail');
+
+//credits section
+Route::get('/clients/credits/main', 'CreditController@getCreditPage')->name('credit.page');
+Route::post('/clients/credits/purchase', 'CreditController@purchaseCredits')->name('purchase.credit');
+Route::get('/clients/credits/transfer_pg', 'CreditController@getTransferPage')->name('transfer.page');
+Route::post('/clients/credits/transfer', 'CreditController@transferCredits')->name('transfer.credit');

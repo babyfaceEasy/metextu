@@ -36,7 +36,7 @@
                 </div>
                 <div class="form-group ">
                     <div class="col-xs-12">
-                        <input id="phone_number" type="text" class="form-control{{ $errors->has('phone_number') ? ' is-invalid' : '' }}" name="phone_number" value="{{ old('phone_number') }}" required="" placeholder="Phone Number">
+                        <input id="phone_number" type="text" class="form-control{{ $errors->has('phone_number') ? ' is-invalid' : '' }}" name="phone_number" value="{{ old('phone_number') }}" required="" placeholder="Phone Number e.g +2348088881188">
                         @if ($errors->has('phone_number'))
                             <span class="invalid-feedback">
                                 <strong>{{ $errors->first('phone_number') }}</strong>

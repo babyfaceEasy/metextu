@@ -23,5 +23,5 @@
             <span aria-hidden="true">&times;</span>
         </button>
         <strong>Failure!</strong> Work
-    </div>
+</div>
 -->

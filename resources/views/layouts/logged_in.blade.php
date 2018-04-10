@@ -11,7 +11,7 @@
         <title>{{ config('app.name', 'Laravel') }}</title>
 
         <!--Morris Chart CSS -->
-		<link rel="stylesheet" href="{{ asset('plugins/morris/morris.css') }}">
+		<!--<link rel="stylesheet" href="{{ asset('plugins/morris/morris.css') }}">-->
 
         <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('css/core.css') }}" rel="stylesheet" type="text/css" />
@@ -61,7 +61,7 @@
                 <!-- LOGO -->
                 <div class="topbar-left">
                     <div class="text-center">
-                        <a href="index.php" class="logo"><img src="{{ asset('images/logo.png') }}"></a>
+                        <a href="{{ route('home') }}" class="logo"><img src="{{ asset('images/logo.png') }}"></a>
                         <!-- Image Logo here -->
                         <!--<a href="index.html" class="logo">-->
                             <!--<i class="icon-c-logo"> <img src="assets/images/logo_sm.png" height="42"/> </i>-->
@@ -246,7 +246,7 @@
                         	<li class="text-muted menu-title">Navigation</li>
 
                             <li class="has_sub">
-                                <a href="index.php" class="waves-effect"><i class="ti-home"></i> <span> Dashboard </span> </a>
+                                <a href="{{ route('home') }}" class="waves-effect"><i class="ti-home"></i> <span> Dashboard </span> </a>
                                
                             </li>
 
@@ -261,12 +261,12 @@
                             </li>
 
                             <li class="has_sub">
-                                <a href="buy_credit.php" class="waves-effect"><i class="ti-spray"></i> <span> Buy Credits </span> </a>
+                                <a href="{{route('credit.page')}}" class="waves-effect"><i class="ti-spray"></i> <span> Buy Credits </span> </a>
                                 
                             </li>
 
                             <li class="has_sub">
-                                <a href="transfer_credit.php" class="waves-effect"><i class="ti-pencil-alt"></i><span> Transfer Credit </span> </a>
+                                <a href="{{route('transfer.page') }}" class="waves-effect"><i class="ti-pencil-alt"></i><span> Transfer Credit </span> </a>
                                 
                             </li>
 
@@ -318,6 +318,7 @@
 
         <!-- jQuery  -->
          <!-- jQuery  -->
+         
         <script src="{{ asset('js/jquery.min.js') }}"></script>
         <script src="{{ asset('js/bootstrap.min.js') }}"></script>
         <script src="{{ asset('js/detect.js') }}"></script>
@@ -339,26 +340,26 @@
         <script src="{{ asset('plugins/bootstrap-touchspin/js/jquery.bootstrap-touchspin.min.js') }}" type="text/javascript"></script>
         <script src="{{ asset('plugins/bootstrap-maxlength/bootstrap-maxlength.min.js') }}" type="text/javascript"></script>
 
-        <script type="text/javascript" src="{{ asset('plugins/autocomplete/jquery.mockjax.js') }}"></script>
+        <!--<script type="text/javascript" src="{{ asset('plugins/autocomplete/jquery.mockjax.js') }}"></script>
         <script type="text/javascript" src="{{ asset('plugins/autocomplete/jquery.autocomplete.min.js') }}"></script>
         <script type="text/javascript" src="{{ asset('plugins/autocomplete/countries.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('pages/autocomplete.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('pages/autocomplete.js') }}"></script>-->
 
         <script type="text/javascript" src="{{ asset('pages/jquery.form-advanced.init.js') }}"></script>
 
          <script src="{{ asset('plugins/peity/jquery.peity.min.js') }}"></script>
-        <!-- jQuery  -->
+
         <script src="{{ asset('plugins/waypoints/lib/jquery.waypoints.js') }}"></script>
         <script src="{{ asset('plugins/counterup/jquery.counterup.min.js') }}"></script>
 
 
 
-        <script src="{{ asset('plugins/morris/morris.min.js') }}"></script>
+        <!--<script src="{{ asset('plugins/morris/morris.min.js') }}"></script>-->
         <script src="{{ asset('plugins/raphael/raphael-min.js') }}"></script>
 
         <script src="{{ asset('plugins/jquery-knob/jquery.knob.js') }}"></script>
 
-        <script src="{{ asset('pages/jquery.dashboard.js') }}"></script>
+        <!--<script src="{{ asset('pages/jquery.dashboard.js') }}"></script>-->
 
         <script src="{{ asset('js/jquery.core.js') }}"></script>
         <script src="{{ asset('js/jquery.app.js') }}"></script>
@@ -384,10 +385,11 @@
 
 <script src="{{ asset('pages/datatables.init.js') }}"></script>
 <script src="{{ asset('plugins/bootstrap-tagsinput/js/bootstrap-tagsinput.min.js') }}"></script>
-
+         
         
 
         <!--form validation init-->
+        <!--
         <script src="{{ asset('plugins/tinymce/tinymce.min.js') }}"></script>
         
         <script type="text/javascript">
@@ -461,8 +463,8 @@
 
             });
         </script>
-
-        
+    -->
+    
         
   </body>
 </html>

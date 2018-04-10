@@ -57,6 +57,11 @@ class User extends Authenticatable
     {
         return $this->hasMany('App\Sms');
     }
+
+    public function credit()
+    {
+        return $this->hasOne('App\Credit');
+    }
     //end of relationships
 
     //helper methods

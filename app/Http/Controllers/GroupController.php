@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use DataTables;
 use App\Group;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -10,6 +11,18 @@ use Illuminate\Auth\Access\AuthorizationException;
 
 class GroupController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    public function getGroups()
+    {
+        $groups = Group::where('user_id', Auth::user()->id)->get();
+        return DataTables::of($groups)
+            ->addColumn('actions','clients.groups.datatables.actions')
+            ->rawColumns(['actions'])
+            ->toJson();
+    }
     /**
      * Display a listing of the resource.
      *

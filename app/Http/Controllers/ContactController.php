@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Group;
+use DataTables;
 //use Messaging;
 use App\Contact;
 use Illuminate\Http\Request;
@@ -15,6 +16,15 @@ use Illuminate\Auth\Access\AuthorizationException;
 
 class ContactController extends Controller
 {
+    public function getContacts(Group $group)
+    {
+        $contacts = Contact::where('group_id', '=', $group->id)->get();
+        return DataTables::of($contacts)
+            ->addColumn('actions','clients.contacts.datatables.actions')
+            ->rawColumns(['actions'])
+            ->toJson();
+    }
+
     /**
      * This returns a list of all contacts 
      * @return Collection 

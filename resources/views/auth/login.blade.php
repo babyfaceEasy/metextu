@@ -15,12 +15,6 @@
     <div class="panel-body">
     <form class="form-horizontal m-t-20" method="POST" action="{{ route('login') }}">
         {{ csrf_field() }}
-        <div class="alert alert-info alert-dismissable">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
-                        ×
-                    </button>
-                    Enter your <b>Email</b> and instructions will be sent to you!
-                </div>
         <div class="form-group ">
             <div class="col-xs-12">
                 <input class="form-control" name="email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" type="text" value="{{ old('email') }}" required autofocus placeholder="Email">

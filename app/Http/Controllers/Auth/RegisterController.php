@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use App\Credit;
 use Illuminate\Http\Request;
 use Illuminate\Auth\Events\Registered;
 use App\Notifications\VerifyEmail;
@@ -86,7 +87,7 @@ class RegisterController extends Controller
         $user->sendVerificationEmail();
 
         session()->flash('suc_msg', 
-            'Account creation was succesful, please check yur mail in order to activate your account.');
+            'Account creation was succesful, please check your mail in order to activate your account.');
 
         return $user;
     }
@@ -94,6 +95,10 @@ class RegisterController extends Controller
     //this redirects the user after they have registered
     public function registered(Request $request, $user)
     {
+        //create the users credit details
+        $credit_data = ['user_id' => $user->id, 'units'=> 0.0];
+        //TODO: ADD A TYR AND CATCH HERE
+        Credit::create($credit_data);
         $this->guard()->logout();
         return redirect('/login')->with('suc_msg', 'We sent you an activation code. Check your email and click on the link to verify.');
     }

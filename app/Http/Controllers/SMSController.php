@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Sms;
+use App\Group;
+use App\Contact;
 use App\Message;
 use App\TextMessage;
 use Illuminate\Http\Request;
@@ -11,17 +13,24 @@ use Midnite81\Plivo\Contracts\Services\Messaging;
 
 class SMSController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     //this controller works with the TextMessage Model
 
     //this is to return the sms page
     public function create()
     {
-        return view ('clients.sms.create');
+        //select groups
+        $groups = Group::where('user_id', Auth::user()->id)->get();
+        return view ('clients.sms.create')->with('groups', $groups);
     }
 
     //this is the side that handles sending of the sms
     public function sendSMS(Request $request, Messaging $messaging)
     {
+        //dd($request->data);
         //nb: for you to send to many numbers, pass it as an array.
         //hence if dere exist a, den just convert to array.
         //dst_nos would be sepreated by commas
@@ -29,8 +38,10 @@ class SMSController extends Controller
         $data = $this->validate($request, [
             'sender_name' => 'required|min:3',
             'message' => 'required',
-            'dst_nos' => 'required',
+            'group_nos' => '',
+            'dst_nos' => 'required_without_all:group_nos',
         ]);
+        //dd($data);
 
         //nb: when doing bulk, each messageUUID == to one phone number
         //so we would be saving each inside the database.
@@ -39,10 +50,23 @@ class SMSController extends Controller
         //others would be updated by the route(sms.status) action.
 
         //convering dst_nos to array.
-        $data['dst_nos'] = explode(',', $request->get('dst_nos'));
-        $dst_nos = $data['dst_nos'];
+        $data['dst_nos'] = array();
+        if($request->get('dst_nos') != null){
+            $dst_nos = explode(',', $request->get('dst_nos'));
+            //this is to remove spaces from the elements in the array
+            $dst_nos = array_map('trim', $dst_nos);
+            $data['dst_nos'] = array_merge($dst_nos, $data['dst_nos']);
+        }
+
+        if($request->get('group_nos') != null){
+            //slect all the digits in the group and merge dem;
+            $group = Contact::where('group_id', $request->get('group_nos'))->get();
+            $group_nos = $group->pluck('cphone_no')->toArray();
+            $group_nos = array_map('trim', $group_nos);
+            $data['dst_nos'] = array_merge($group_nos, $data['dst_nos']);
+        }
         
-        //dd($data['dst_nos']);
+        //dd($data);
 
         //add the current user to it
         $data['user_id'] = Auth::user()->id;
